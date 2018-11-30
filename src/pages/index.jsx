@@ -1,11 +1,11 @@
-import React, { Component } from "react"
-import geodist from "geodist"
+import React, { Component } from 'react';
+import geodist from 'geodist';
 
-import Layout from "../components/layout"
-import SearchForm from "../components/Search/SearchForm"
-import SearchResult from "../components/Search/SearchResult"
+import Layout from '../components/layout';
+import SearchForm from '../components/Search/SearchForm';
+import SearchResult from '../components/Search/SearchResult';
 
-import transmitterListing from '../data/acma/transmitter_listing_20110702.json'
+import transmitterListing from '../data/acma/transmitter_listing_20110702.json';
 
 class IndexPage extends Component {
   constructor(props) {
@@ -14,10 +14,10 @@ class IndexPage extends Component {
     this.handleQueryChange = this.handleQueryChange.bind(this);
 
     this.state = {
-      query: "",
+      query: '',
       position: null,
       results: [],
-    }
+    };
   }
 
   componentDidMount() {
@@ -26,7 +26,7 @@ class IndexPage extends Component {
 
   handleQueryChange(query) {
     this.setState({
-      query: query
+      query,
     }, () => {
       this.getInfo();
     });
@@ -34,26 +34,23 @@ class IndexPage extends Component {
 
   getInfo = () => {
     const latlng = {
-      "lat": this.state.position.coords.latitude,
-      "lng": this.state.position.coords.longitude
+      lat: this.state.position.coords.latitude,
+      lng: this.state.position.coords.longitude,
     };
 
     let transmitterListingSorted = transmitterListing.map((t) => {
-      t['distance'] = geodist(
+      t.distance = geodist(
         latlng,
-        { "lat": t.latitude, "lng": t.longitude },
-        { "exact": true, "unit": "km"}
+        { lat: t.latitude, lng: t.longitude },
+        { exact: true, unit: 'km' },
       );
       return t;
     });
-    transmitterListingSorted = transmitterListingSorted.sort((a, b) => {
-      return a.distance - b.distance;
-    });
+    transmitterListingSorted = transmitterListingSorted.sort((a, b) => a.distance - b.distance);
 
-    console.log(this.state);
-    if(this.state.query.length > 1) {
+    if (this.state.query.length > 1) {
       transmitterListingSorted = transmitterListingSorted.filter((t) => {
-        if(t.callsign === null) {
+        if (t.callsign === null) {
           return false;
         }
         return t.callsign.match(new RegExp(this.state.query, 'i')) !== null;
@@ -74,13 +71,13 @@ class IndexPage extends Component {
       geolocation.getCurrentPosition((position) => {
         resolve(position);
       }, () => {
-        reject (new Error('Permission denied'));
+        reject(new Error('Permission denied'));
       });
     });
 
     location.then((position) => {
       this.setState({
-        position: position
+        position,
       }, () => {
         this.getInfo();
       });
@@ -90,32 +87,25 @@ class IndexPage extends Component {
   render() {
     const { query } = this.state;
 
-    let searchResults = this.state.results.map((t) => {
-      const key = [
-        t.frequency,
-        t.callsign,
-        t.easting,
-        t.northing,
-        t.licenceNumber,
-        t.licenceAreaID,
-        t.siteId,
-      ].join('-');
+    const searchResults = this.state.results.map((t) => {
+      const { id } = t;
 
       return (
-        <li className="list-group-item" key={ key }>
-          <SearchResult transmitter={ t } key={ key } />
+        <li className="list-group-item" key={id}>
+          <SearchResult transmitter={t} key={id} />
         </li>
-      )
+      );
     });
 
-    return(
+    return (
       <Layout>
         <div className="container">
           <div className="row">
             <div className="col">
               <SearchForm
-                query={ query }
-                onQueryChange={ this.handleQueryChange } />
+                query={query}
+                onQueryChange={this.handleQueryChange}
+              />
               <div className="card">
                 <div className="card-header">Transmitters</div>
                 <ul className="list-group list-group-flush">
@@ -126,8 +116,8 @@ class IndexPage extends Component {
           </div>
         </div>
       </Layout>
-    )
+    );
   }
 }
 
-export default IndexPage
+export default IndexPage;

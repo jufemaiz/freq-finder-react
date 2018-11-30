@@ -1,12 +1,12 @@
-import { Link } from 'gatsby'
-import get from 'lodash/get'
-import React from 'react'
-import map from 'lodash/map'
-import Img from 'gatsby-image'
+import { Link } from 'gatsby';
+import get from 'lodash/get';
+import React from 'react';
+import map from 'lodash/map';
+import Img from 'gatsby-image';
 
-import Adsense from 'components/Adsense'
-import Footer from 'components/Footer'
-import './style.scss'
+import Adsense from 'components/Adsense';
+import Footer from 'components/Footer';
+import './style.scss';
 
 const Post = ({ data, options }) => {
   const {
@@ -17,11 +17,11 @@ const Post = ({ data, options }) => {
     path,
     date,
     image,
-  } = data.frontmatter
-  const { isIndex, adsense } = options
-  const html = get(data, 'html')
-  const isMore = isIndex && !!html.match('<!--more-->')
-  const fixed = get(image, 'childImageSharp.fixed')
+  } = data.frontmatter;
+  const { isIndex, adsense } = options;
+  const html = get(data, 'html');
+  const isMore = isIndex && !!html.match('<!--more-->');
+  const fixed = get(image, 'childImageSharp.fixed');
 
   return (
     <div className="article" key={path}>
@@ -52,25 +52,23 @@ const Post = ({ data, options }) => {
         {getAd(isIndex, adsense)}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Post
+export default Post;
 
-const getAd = (isIndex, adsense) => {
-  return !isIndex ? <Adsense clientId={adsense} slotId="" format="auto" /> : ''
-}
+const getAd = (isIndex, adsense) => (!isIndex ? <Adsense clientId={adsense} slotId="" format="auto" /> : '');
 
-const getDescription = body => {
-  body = body.replace(/<blockquote>/g, '<blockquote class="blockquote">')
+const getDescription = (body) => {
+  body = body.replace(/<blockquote>/g, '<blockquote class="blockquote">');
   if (body.match('<!--more-->')) {
-    body = body.split('<!--more-->')
+    body = body.split('<!--more-->');
     if (typeof body[0] !== 'undefined') {
-      return body[0]
+      return body[0];
     }
   }
-  return body
-}
+  return body;
+};
 
 const Button = ({ path, label, primary }) => (
   <Link className="readmore" to={path}>
@@ -82,16 +80,13 @@ const Button = ({ path, label, primary }) => (
       {label}
     </span>
   </Link>
-)
+);
 
-const Badges = ({ items, primary }) =>
-  map(items, (item, i) => {
-    return (
-      <span
-        className={`badge ${primary ? 'badge-primary' : 'badge-secondary'}`}
-        key={i}
-      >
-        {item}
-      </span>
-    )
-  })
+const Badges = ({ items, primary }) => map(items, (item, i) => (
+  <span
+    className={`badge ${primary ? 'badge-primary' : 'badge-secondary'}`}
+    key={i}
+  >
+    {item}
+  </span>
+));

@@ -1,7 +1,7 @@
-import * as PropTypes from "prop-types"
-import React, { Component } from "react"
+import * as PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
-import { Link } from "gatsby"
+import { Link } from 'gatsby';
 
 class SearchResult extends Component {
   static propTypes = {
@@ -19,46 +19,68 @@ class SearchResult extends Component {
   }
 
   render() {
-    const { band,
-            onAirID,
-            areaServed,
-            callsign,
-            frequency,
-            purpose,
-            polarisation,
-            antennaHeight,
-            antennaPattern,
-            maximumERP,
-            maximumCMF,
-            transmitterPower,
-            technicalSpecificationNumber,
-            licenceNumber,
-            siteId,
-            siteName,
-            zone,
-            easting,
-            northing,
-            latitude,
-            longitude,
-            state,
-            bSL,
-            licenceArea,
-            licenceAreaID,
-            hoursofOperation,
-            status,
-            distance } = this.props.transmitter;
+    const {
+      antennaHeight,
+      antennaPattern,
+      areaServed,
+      bSL,
+      band,
+      callsign,
+      distance,
+      easting,
+      frequency,
+      hoursofOperation,
+      id,
+      latitude,
+      licenceArea,
+      licenceAreaID,
+      licenceNumber,
+      longitude,
+      maximumCMF,
+      maximumERP,
+      northing,
+      onAirID,
+      polarisation,
+      purpose,
+      siteId,
+      siteName,
+      state,
+      status,
+      technicalSpecificationNumber,
+      transmitterPower,
+      zone,
+    } = this.props.transmitter;
 
     return (
       <div className="transmitter">
-        <h5>{callsign} {frequency}{band}</h5>
-        <p>{ siteName }, { areaServed }, { state }</p>
-        <p>Distance: { distance.toFixed(2) }km</p>
-        <p>
-          <span className="badge badge-default">{ purpose }</span>
-        </p>
+        <Link to={`/transmitters/${id}`}>
+          <h5>
+            {callsign}
+            {' '}
+            {frequency}
+            {band}
+          </h5>
+          <p>
+            { siteName }
+,
+            {' '}
+            { areaServed }
+,
+            {' '}
+            { state }
+          </p>
+          <p>
+Distance:
+            { distance.toFixed(2) }
+km
+          </p>
+          <p>
+            <span className="badge badge-primary">{ purpose }</span>
+          </p>
+        </Link>
       </div>
     );
   }
 }
 
-export default SearchResult
+export default SearchResult;

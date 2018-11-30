@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import React from 'react';
 
 import {
   faGithub,
@@ -9,14 +9,14 @@ import {
   faNode,
   faReact,
   faTwitter,
-} from '@fortawesome/free-brands-svg-icons'
+} from '@fortawesome/free-brands-svg-icons';
 
 import {
   faBroadcastTower,
-} from '@fortawesome/free-solid-svg-icons'
+} from '@fortawesome/free-solid-svg-icons';
 
 
-import './style.scss'
+import './style.scss';
 
 library.add(
   faBroadcastTower,
@@ -26,10 +26,10 @@ library.add(
   faNode,
   faReact,
   faTwitter,
-)
+);
 
 const Icon = ({ name }) => (
   <FontAwesomeIcon icon={name} />
-)
+);
 
-export default Icon
+export default Icon;

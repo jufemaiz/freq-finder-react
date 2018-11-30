@@ -1,5 +1,7 @@
 "use strict"
 
+const path = require(`path`);
+
 // Implement the Gatsby API “createPages”. This is called once the
 // data layer is bootstrapped to let plugins create pages from data.
 exports.createPages = ({ actions, graphql }) => {
@@ -13,4 +15,35 @@ exports.createPages = ({ actions, graphql }) => {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const
   // Maybe we usually redirect to page 2, with trailing slash.
   const rootPath = '/'
+
+  const { createPage } = actions;
+
+  return new Promise((resolve, reject) => {
+    graphql(`
+      {
+        allTransmitterListing20110702Json {
+          edges {
+            node {
+              id
+            }
+          }
+        }
+      }
+    `
+  ).then(result => {
+    result.data.allTransmitterListing20110702Json.edges.forEach(({ node }) => {
+      createPage({
+        path: `transmitters/${node.id}`,
+        component: path.resolve(`./src/pages/transmitter.jsx`),
+        context: {
+          transmitterID: node.id
+        },
+      })
+    })
+    resolve()
+    })
+  }).catch(error => {
+    console.log(error)
+    reject()
+  })
 }

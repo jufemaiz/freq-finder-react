@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { Component } from 'react';
 
 class SearchForm extends Component {
   constructor(props) {
@@ -17,14 +17,16 @@ class SearchForm extends Component {
       <form>
         <div className="form-group">
           <label htmlFor="query" className="sr-only">Filter</label>
-          <input className="form-control"
+          <input
+            className="form-control"
             placeholder="Refine results"
-            value={ query }
-            onChange={ this.handleChange } />
+            value={query}
+            onChange={this.handleChange}
+          />
         </div>
       </form>
-    )
+    );
   }
 }
 
-export default SearchForm
+export default SearchForm;
