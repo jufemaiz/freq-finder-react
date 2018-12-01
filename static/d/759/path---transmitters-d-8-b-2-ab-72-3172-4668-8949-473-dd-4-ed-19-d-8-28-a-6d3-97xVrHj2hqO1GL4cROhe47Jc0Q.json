@@ -1,0 +1,1 @@
+{"errors":[{"message":"Variable \"$transmitterID\" of required type \"String!\" was not provided.","locations":[{"line":2,"column":3}]}],"pageContext":{"transmitterId":"d8b2ab72-3172-4668-8949-473dd4ed19d8"}}
