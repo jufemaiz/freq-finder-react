@@ -74,3 +74,18 @@ img:hover {
 .row {
   margin-top: 2rem;
 }
+
+#footer {
+  background: #ccc;
+  margin-top: 2rem;
+  padding: 2rem 0;
+
+  .row {
+    margin: 0;
+  }
+
+  p {
+    font-size: 80%;
+    margin: .4rem 0;
+  }
+}

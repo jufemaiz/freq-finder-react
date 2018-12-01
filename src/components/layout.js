@@ -4,10 +4,8 @@ import Helmet from 'react-helmet';
 import { StaticQuery, graphql } from 'gatsby';
 
 import Header from './header';
+import Footer from './footer';
 
-import 'jquery';
-import 'popper.js';
-import 'bootstrap/dist/js/bootstrap';
 import '../scss/base.scss';
 
 const Layout = ({ children }) => (
@@ -37,6 +35,7 @@ const Layout = ({ children }) => (
         <div className="container">
           {children}
         </div>
+        <Footer />
       </>
     )}
   />

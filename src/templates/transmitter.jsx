@@ -1,18 +1,24 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { graphql, Link } from 'gatsby';
+import { graphql } from 'gatsby';
 import { GoogleApiWrapper, Map } from 'google-maps-react';
 import geodist from 'geodist';
 
 import Layout from '../components/layout';
-import ElevationProfile from '../components/ElevationProfile'
-
-import transmitterListing from '../data/acma/transmitter_listing_20110702.json';
+import ElevationProfile from '../components/ElevationProfile';
 
 const mapStyles = {
   fullscreenControl: false,
 };
 
 class TransmitterPage extends Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      transmitterListing20110702Json: PropTypes.shape.isRequired,
+    }).isRequired,
+    google: PropTypes.shape,
+  };
+
   constructor(props) {
     super(props);
 
@@ -20,7 +26,6 @@ class TransmitterPage extends Component {
 
     this.state = {
       distance: 0.0,
-      key: '',
       positionAcquired: false,
       position: {
         coords: {
@@ -41,7 +46,7 @@ class TransmitterPage extends Component {
   }
 
   getLocation = () => {
-    const geolocation = navigator.geolocation;
+    const { geolocation } = navigator;
 
     const location = new Promise((resolve, reject) => {
       if (!geolocation) {
@@ -56,9 +61,14 @@ class TransmitterPage extends Component {
     });
 
     location.then((position) => {
+      const transmitterLat = this.state.transmitter.latitude;
+      const transmitterLng = this.state.transmitter.longitude;
+      const positionLat = position.coords.latitude;
+      const positionLng = position.coords.longitude;
+
       const distance = geodist(
-        { lat: position.coords.latitude, lng: position.coords.longitude },
-        { lat: this.state.transmitter.latitude, lng: this.state.transmitter.longitude },
+        { lat: positionLat, lng: positionLng },
+        { lat: transmitterLat, lng: transmitterLng },
         { exact: true, unit: 'km' },
       );
 
@@ -72,7 +82,8 @@ class TransmitterPage extends Component {
 
   render() {
     const { distance, positionAcquired } = this.state;
-    const mapStyles = {};
+    const { google } = this.props;
+
     const gmapPosition = {
       lat: this.state.position.coords.latitude,
       lng: this.state.position.coords.longitude,
@@ -190,17 +201,21 @@ m high
           <div className="row">
             <div className="col">
               <div className="card" style={{ height: `${200}px` }}>
+                <div className="card-header">Elevation Profile</div>
                 {elevationProfile}
               </div>
             </div>
             <div className="col">
-              <div className="card" style={{ height: `${200}px` }}>
-                <Map
-                  google={this.props.google}
-                  zoom={10}
-                  style={mapStyles}
-                  initialCenter={gmapPosition}
-                />
+              <div className="card">
+                <div className="card-header">Map</div>
+                <div className="card-img-bottom" style={{ height: `${200}px` }}>
+                  <Map
+                    google={google}
+                    zoom={10}
+                    style={mapStyles}
+                    initialCenter={gmapPosition}
+                  />
+                </div>
               </div>
             </div>
           </div>

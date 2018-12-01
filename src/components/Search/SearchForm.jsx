@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Form from 'react-bootstrap/lib/Form'
+
 class SearchForm extends Component {
   constructor(props) {
     super(props);
@@ -12,19 +14,20 @@ class SearchForm extends Component {
   }
 
   render() {
-    const { query } = this.props;
+    let { query } = this.props;
+
     return (
-      <form>
-        <div className="form-group">
-          <label htmlFor="query" className="sr-only">Filter</label>
-          <input
-            className="form-control"
+      <Form>
+        <Form.Group>
+          <Form.Label srOnly={true}>Filter</Form.Label>
+          <Form.Control
+            type="text"
             placeholder="Refine results"
             value={query}
             onChange={this.handleChange}
           />
-        </div>
-      </form>
+        </Form.Group>
+      </Form>
     );
   }
 }

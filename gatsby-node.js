@@ -34,7 +34,7 @@ exports.createPages = ({ actions, graphql }) => {
     result.data.allTransmitterListing20110702Json.edges.forEach(({ node }) => {
       createPage({
         path: `transmitters/${node.id}`,
-        component: path.resolve(`./src/pages/transmitter.jsx`),
+        component: path.resolve(`./src/templates/transmitter.jsx`),
         context: {
           transmitterID: node.id
         },
