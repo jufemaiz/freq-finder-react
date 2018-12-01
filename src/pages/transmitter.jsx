@@ -21,6 +21,7 @@ class TransmitterPage extends Component {
     this.state = {
       distance: 0.0,
       key: '',
+      positionAcquired: false,
       position: {
         coords: {
           latitude: transmitter.latitude,
@@ -33,6 +34,10 @@ class TransmitterPage extends Component {
 
   componentDidMount() {
     this.getLocation();
+  }
+
+  componentWillUnmount() {
+
   }
 
   getLocation = () => {
@@ -59,15 +64,16 @@ class TransmitterPage extends Component {
 
       this.setState({
         distance: distance.toFixed(2),
+        positionAcquired: true,
         position,
       });
     });
   }
 
   render() {
-    const distance = this.state.distance;
+    const { distance, positionAcquired } = this.state;
     const mapStyles = {};
-    const position = {
+    const gmapPosition = {
       lat: this.state.position.coords.latitude,
       lng: this.state.position.coords.longitude,
     };
@@ -81,6 +87,12 @@ class TransmitterPage extends Component {
       latitude: this.state.transmitter.latitude,
       longitude: this.state.transmitter.longitude,
     };
+
+    let elevationProfile = null;
+
+    if(positionAcquired) {
+      elevationProfile = <ElevationProfile location1={location1} location2={location2} />;
+    }
 
     const {
       antennaHeight,
@@ -178,7 +190,7 @@ m high
           <div className="row">
             <div className="col">
               <div className="card" style={{ height: `${200}px` }}>
-                <ElevationProfile location1={location1} location2={location2} />
+                {elevationProfile}
               </div>
             </div>
             <div className="col">
@@ -187,10 +199,7 @@ m high
                   google={this.props.google}
                   zoom={10}
                   style={mapStyles}
-                  initialCenter={{
-                    lat: latitude,
-                    lng: longitude,
-                  }}
+                  initialCenter={gmapPosition}
                 />
               </div>
             </div>
