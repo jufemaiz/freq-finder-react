@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
+
 import geodist from 'geodist';
 
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import SearchForm from '../components/Search/SearchForm';
 import SearchResult from '../components/Search/SearchResult';
 
 import transmitterListing from '../data/acma/transmitter_listing_20110702.json';
 
 class IndexPage extends Component {
+  static defaultProps = {}
+
+  static propTypes = {}
+
   constructor(props) {
     super(props);
 
@@ -24,36 +29,34 @@ class IndexPage extends Component {
     this.getLocation();
   }
 
-  handleQueryChange(query) {
-    this.setState({
-      query,
-    }, () => {
-      this.getInfo();
-    });
-  }
-
   getInfo = () => {
-    const latlng = {
-      lat: this.state.position.coords.latitude,
-      lng: this.state.position.coords.longitude,
+    const { position } = this.state;
+    const { coords } = position;
+    const { latitude, longitude } = coords;
+    const latLng = {
+      lat: latitude,
+      lng: longitude,
     };
+    const { query } = this.state;
 
-    let transmitterListingSorted = transmitterListing.map((t) => {
-      t.distance = geodist(
-        latlng,
-        { lat: t.latitude, lng: t.longitude },
+    let transmitterListingSorted = transmitterListing.map((transmitter) => {
+      const transmitterWithDistance = transmitter;
+      transmitterWithDistance.distance = geodist(
+        latLng,
+        { lat: transmitter.latitude, lng: transmitter.longitude },
         { exact: true, unit: 'km' },
       );
-      return t;
+      return transmitterWithDistance;
     });
     transmitterListingSorted = transmitterListingSorted.sort((a, b) => a.distance - b.distance);
 
-    if (this.state.query.length > 1) {
-      transmitterListingSorted = transmitterListingSorted.filter((t) => {
-        if (t.callsign === null) {
+    if (query.length > 1) {
+      transmitterListingSorted = transmitterListingSorted.filter((transmitter) => {
+        const { callsign } = transmitter;
+        if (callsign === null) {
           return false;
         }
-        return t.callsign.match(new RegExp(this.state.query, 'i')) !== null;
+        return callsign.match(new RegExp(query, 'i')) !== null;
       });
     }
 
@@ -61,7 +64,7 @@ class IndexPage extends Component {
   }
 
   getLocation = () => {
-    const geolocation = navigator.geolocation;
+    const { geolocation } = navigator;
 
     const location = new Promise((resolve, reject) => {
       if (!geolocation) {
@@ -84,15 +87,23 @@ class IndexPage extends Component {
     });
   }
 
-  render() {
-    const { query } = this.state;
+  handleQueryChange(query) {
+    this.setState({
+      query,
+    }, () => {
+      this.getInfo();
+    });
+  }
 
-    const searchResults = this.state.results.map((t) => {
-      const { id } = t;
+  render() {
+    const { query, results } = this.state;
+
+    const searchResults = results.map((transmitter) => {
+      const { id } = transmitter;
 
       return (
         <li className="list-group-item" key={id}>
-          <SearchResult transmitter={t} key={id} />
+          <SearchResult transmitter={transmitter} key={id} />
         </li>
       );
     });

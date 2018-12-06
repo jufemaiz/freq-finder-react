@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'gatsby';
-import Icon from './Icon';
+
+import Icon from '../Icon';
 
 const Header = ({ siteTitle }) => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -14,5 +16,9 @@ const Header = ({ siteTitle }) => (
     </Link>
   </nav>
 );
+
+Header.propTypes = {
+  siteTitle: PropTypes.string.isRequired,
+};
 
 export default Header;

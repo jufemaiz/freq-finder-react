@@ -1,8 +1,19 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import Form from 'react-bootstrap/lib/Form'
+import Form from 'react-bootstrap/lib/Form';
 
 class SearchForm extends Component {
+  static defaultProps = {
+    onQueryChange: null,
+    query: null,
+  }
+
+  static propTypes = {
+    onQueryChange: PropTypes.func,
+    query: PropTypes.string,
+  }
+
   constructor(props) {
     super(props);
 
@@ -10,16 +21,19 @@ class SearchForm extends Component {
   }
 
   handleChange(e) {
-    this.props.onQueryChange(e.target.value);
+    const { value } = e.target;
+    const { onQueryChange } = this.props;
+
+    onQueryChange(value);
   }
 
   render() {
-    let { query } = this.props;
+    const { query } = this.props;
 
     return (
       <Form>
         <Form.Group>
-          <Form.Label srOnly={true}>Filter</Form.Label>
+          <Form.Label srOnly>Filter</Form.Label>
           <Form.Control
             type="text"
             placeholder="Refine results"

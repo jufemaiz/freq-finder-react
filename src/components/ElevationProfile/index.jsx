@@ -125,7 +125,7 @@ class ElevationProfile extends Component {
     };
 
     return (
-      <div className="elevation-profile" style={{ marginTop: `20px` }}>
+      <div className="elevation-profile" style={{ marginTop: '20px' }}>
         <Line data={data} options={options} height={100} />
       </div>
     );
