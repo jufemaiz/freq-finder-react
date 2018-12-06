@@ -1,11 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 
-class Search extends Component {
-  render() {
-    return (
-      <Fragment />
-    );
-  }
-}
+const Search = () => (
+  <Fragment />
+);
 
 export default Search;

@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types';
+import React from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import React from 'react';
 
 import {
   faGithub,
@@ -31,5 +33,9 @@ library.add(
 const Icon = ({ name }) => (
   <FontAwesomeIcon icon={name} />
 );
+
+Icon.propTypes = {
+  name: PropTypes.string.isRequired,
+};
 
 export default Icon;

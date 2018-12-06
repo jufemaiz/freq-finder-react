@@ -4,8 +4,8 @@ import { graphql } from 'gatsby';
 import { GoogleApiWrapper, Map } from 'google-maps-react';
 import geodist from 'geodist';
 
-import Layout from '../components/layout';
-import ElevationProfile from '../components/ElevationProfile';
+import Layout from '../../components/Layout';
+import ElevationProfile from '../../components/ElevationProfile';
 
 const mapStyles = {
   fullscreenControl: false,
