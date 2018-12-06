@@ -12,6 +12,10 @@ const mapStyles = {
 };
 
 class TransmitterPage extends Component {
+  static defaultProps = {
+    google: null,
+  };
+
   static propTypes = {
     data: PropTypes.shape({
       transmitterListing20110702Json: PropTypes.shape.isRequired,
@@ -61,14 +65,20 @@ class TransmitterPage extends Component {
     });
 
     location.then((position) => {
-      const transmitterLat = this.state.transmitter.latitude;
-      const transmitterLng = this.state.transmitter.longitude;
-      const positionLat = position.coords.latitude;
-      const positionLng = position.coords.longitude;
+      const { transmitter } = this.state;
+      const {
+        latitude: transmitterLatitude,
+        longitude: transmitterLongitude,
+      } = transmitter;
+      const { coords } = position;
+      const {
+        latitude: positionLatitude,
+        longitude: positionLongitude,
+      } = coords;
 
       const distance = geodist(
-        { lat: positionLat, lng: positionLng },
-        { lat: transmitterLat, lng: transmitterLng },
+        { lat: positionLatitude, lng: positionLongitude },
+        { lat: transmitterLatitude, lng: transmitterLongitude },
         { exact: true, unit: 'km' },
       );
 
@@ -84,24 +94,29 @@ class TransmitterPage extends Component {
     const { distance, positionAcquired } = this.state;
     const { google } = this.props;
 
+    const { position } = this.state;
+    const { coords: location1 } = position;
+    const {
+      latitude: gmapLatitude,
+      longitude: gmapLongitude,
+    } = location1;
     const gmapPosition = {
-      lat: this.state.position.coords.latitude,
-      lng: this.state.position.coords.longitude,
+      lat: gmapLatitude,
+      lng: gmapLongitude,
     };
-
-    const location1 = {
-      latitude: this.state.position.coords.latitude,
-      longitude: this.state.position.coords.longitude,
-    };
-
+    const { transmitter } = this.state;
+    const {
+      latitude: transmitterLatitude,
+      longitude: transmitterLongitude,
+    } = transmitter;
     const location2 = {
-      latitude: this.state.transmitter.latitude,
-      longitude: this.state.transmitter.longitude,
+      latitude: transmitterLatitude,
+      longitude: transmitterLongitude,
     };
 
     let elevationProfile = null;
 
-    if(positionAcquired) {
+    if (positionAcquired) {
       elevationProfile = <ElevationProfile location1={location1} location2={location2} />;
     }
 
@@ -109,32 +124,32 @@ class TransmitterPage extends Component {
       antennaHeight,
       antennaPattern,
       areaServed,
-      bSL,
+      // bSL,
       band,
       callsign,
-      easting,
+      // easting,
       frequency,
       hoursofOperation,
-      id,
+      // id,
       latitude,
       licenceArea,
-      licenceAreaID,
+      // licenceAreaID,
       licenceNumber,
       longitude,
       maximumCMF,
       maximumERP,
-      northing,
-      onAirID,
+      // northing,
+      // onAirID,
       polarisation,
       purpose,
-      siteId,
+      // siteId,
       siteName,
       state,
-      status,
-      technicalSpecificationNumber,
+      // status,
+      // technicalSpecificationNumber,
       transmitterPower,
-      zone,
-    } = this.state.transmitter;
+      // zone,
+    } = transmitter;
 
     return (
       <Layout>

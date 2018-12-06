@@ -53,7 +53,7 @@ class SearchResult extends Component {
 
     return (
       <div className="transmitter">
-        <Link to={`/transmitters/${id}`}>
+        <Link to={`/transmitters/${id}/`}>
           <h5>
             {callsign}
             {' '}

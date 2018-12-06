@@ -33,7 +33,7 @@ exports.createPages = ({ actions, graphql }) => {
   ).then(result => {
     result.data.allTransmitterListing20110702Json.edges.forEach(({ node }) => {
       createPage({
-        path: `transmitters/${node.id}`,
+        path: `transmitters/${node.id}/`,
         component: path.resolve(`./src/templates/transmitter.jsx`),
         context: {
           transmitterID: node.id

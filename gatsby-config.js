@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/freq-finder-react',
   siteMetadata: {
     title: 'FreqFinder (~2011)',
     description: 'ACMA data driven locator of broadcast towers.',
@@ -9,9 +10,9 @@ module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `images`,
+        name: 'images',
         path: `${__dirname}/src/images`,
       },
     },
@@ -27,7 +28,7 @@ module.exports = {
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: 'gatsby-plugin-manifest',
       options: {
         name: 'gatsby-starter-default',
         short_name: 'starter',
