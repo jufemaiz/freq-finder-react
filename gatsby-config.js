@@ -10,6 +10,15 @@ module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
     {
+      resolve: 'gatsby-plugin-create-client-paths',
+      options: {
+        prefixes: [
+          '/app/stations/*',
+          '/app/transmitters/*',
+        ],
+      },
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'images',
@@ -18,13 +27,13 @@ module.exports = {
     },
     'gatsby-plugin-sass',
     'gatsby-transformer-json',
-     {
-       resolve: 'gatsby-source-filesystem',
-       options: {
-         name: 'acma',
-         path: './src/data/acma/',
-       },
-     },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'acma',
+        path: './src/data/acma/',
+      },
+    },
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {
@@ -43,4 +52,4 @@ module.exports = {
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
   ],
-}
+};
