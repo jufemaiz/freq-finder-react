@@ -29,7 +29,7 @@
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.6.3",
     "react-helmet": "^5.2.0",
-    "snyk": "^1.258.2"
+    "snyk": "^1.278.2"
   },
   "keywords": [
     "gatsby"
