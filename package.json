@@ -22,7 +22,7 @@
     "gatsby-transformer-sharp": "^2.4.1",
     "geodist": "^0.2.1",
     "google-maps-react": "^2.0.2",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.2",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-bootstrap": "^1.0.0",
